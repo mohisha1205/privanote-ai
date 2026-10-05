@@ -14,7 +14,20 @@ if st.button("Generate Study Material"):
     if notes_input:
         with st.spinner("Gemma is reading your notes..."):
             # Our specific instructions for the AI
-            prompt = f"Read these notes and output exactly three sections:\n1. A brief summary.\n2. A bulleted list of key ideas.\n3. A 3-question multiple-choice quiz with the correct answers at the bottom.\n\nHere are the notes:\n{notes_input}"
+            prompt = f"""DO NOT review, critique, or analyze the text. DO NOT write "Strengths" or "Areas for Improvement". 
+            Your ONLY job is to extract facts from the text and fill in this exact template:
+
+            Summary:
+            [Write a 1-paragraph summary of the facts]
+
+            Key Ideas:
+            [List 3-5 bullet points]
+
+            Quiz:
+            [Write 3 multiple-choice questions based on the text, with answers at the end]
+
+            Text to process:
+            {notes_input}"""
 
             # Send the prompt to the local Gemma model
             response = ollama.chat(model='gemma:2b', messages=[
